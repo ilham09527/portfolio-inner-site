@@ -1,11 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
-// @ts-ignore
-import videoOne from '../../../assets/video/project1.mp4';
-// @ts-ignore
-import videoTwo from '../../../assets/video/project2.mp4';
-// @ts-ignore
-import alightMotion from '../../../assets/video/alightmotion.png';
+// gambar tools
+import alightMotion from '/videos/alightmotion.png';
 
 type VideoItemProps = {
     id: string;
@@ -22,20 +18,24 @@ const VideoItem: React.FC<VideoItemProps> = ({
 }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    // pause otomatis kalau bukan video aktif
-    if (activeVideoId !== id && videoRef.current && !videoRef.current.paused) {
-        videoRef.current.pause();
-    }
+    // auto pause kalau bukan video aktif
+    useEffect(() => {
+        if (activeVideoId !== id && videoRef.current) {
+            videoRef.current.pause();
+        }
+    }, [activeVideoId, id]);
 
     return (
         <div style={styles.videoWrapper}>
             <video
                 ref={videoRef}
                 controls
+                preload="metadata"
                 style={styles.video}
                 onPlay={() => setActiveVideoId(id)}
             >
                 <source src={src} type="video/mp4" />
+                Browser lu gak support video tag.
             </video>
         </div>
     );
@@ -63,7 +63,7 @@ const VideoEditor: React.FC = () => {
 
             <h2>Editing Tool</h2>
             <div className="captioned-image">
-                <img src={alightMotion} style={styles.toolLogo} />
+                <img src={alightMotion} style={styles.toolLogo} alt="Alight Motion" />
             </div>
 
             <br />
@@ -73,14 +73,14 @@ const VideoEditor: React.FC = () => {
 
             <VideoItem
                 id="video-1"
-                src={videoOne}
+                src="/videos/project1.mp4"
                 activeVideoId={activeVideoId}
                 setActiveVideoId={setActiveVideoId}
             />
 
             <VideoItem
                 id="video-2"
-                src={videoTwo}
+                src="/videos/project2.mp4"
                 activeVideoId={activeVideoId}
                 setActiveVideoId={setActiveVideoId}
             />
@@ -88,7 +88,7 @@ const VideoEditor: React.FC = () => {
     );
 };
 
-const styles: StyleSheetCSS = {
+const styles: any = {
     toolLogo: {
         width: 140,
         margin: '0 auto',
