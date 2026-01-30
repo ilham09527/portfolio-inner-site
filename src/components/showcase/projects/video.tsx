@@ -73,14 +73,14 @@ const VideoEditor: React.FC = () => {
 
             <VideoItem
                 id="video-1"
-                src="/videos/project1.mp4"
+                src="public/videos/project1.mp4"
                 activeVideoId={activeVideoId}
                 setActiveVideoId={setActiveVideoId}
             />
 
             <VideoItem
                 id="video-2"
-                src="/videos/project2.mp4"
+                src="public/videos/project2.mp4"
                 activeVideoId={activeVideoId}
                 setActiveVideoId={setActiveVideoId}
             />
